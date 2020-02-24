@@ -8,6 +8,8 @@ services:
       - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on # allow anonymous users
   identity-node:
     image: identity-node:v0
+    ports:
+      - "3000:3000"
     volumes:
       - ../identity-node:/src
     restart: always
@@ -15,3 +17,5 @@ services:
       IDENTITY_NODE_PORT: 3000
       MQTT_BROKER_HOST: mqtt-broker
       MQTT_BROKER_PORT: 1883
+    working_dir: /src
+    command: bash -c "go mod download && modd && go run main.go" # see https://blog.golang.org/using-go-modules

@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  mqtt-broker:
+    image: vernemq/vernemq
+    restart: always
+    environment:
+      - DOCKER_VERNEMQ_ACCEPT_EULA=yes
+      - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on # allow anonymous users
+  identity-node:
+    build:
+      context: .
+      dockerfile: ../identity-node/Dockerfile-dev
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../identity-node:/src
+    restart: always
+    environment:
+      IDENTITY_NODE_PORT: 3000
+      MQTT_BROKER_HOST: mqtt-broker
+      MQTT_BROKER_PORT: 1883
+    working_dir: /src
+    command: bash -c "go mod download && make serve" # see https://blog.golang.org/using-go-modules

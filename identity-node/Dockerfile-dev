@@ -1,9 +1,11 @@
+# voglio la feature di live reload per il development
+# ergo: non voglio ribuildare l'immagine per vedere modifiche fatte al codebase
+# see https://levelup.gitconnected.com/how-to-live-reload-code-for-golang-and-docker-without-third-parties-ee90721ef641
+
 FROM golang:alpine
 
 WORKDIR /src
 
-# TODO: utilizzare un gestore di dipendenze (?)
-# see https://www.reddit.com/r/golang/comments/95frkk/what_is_the_go_equivalent_to_a_requirementstxt/
-RUN apk add --no-cache git && go get github.com/gin-gonic/gin
+RUN apk add --no-cache bash git && env GO111MODULE=on go get github.com/cortesi/modd/cmd/modd
 
 CMD ["go", "run", "main.go"]
