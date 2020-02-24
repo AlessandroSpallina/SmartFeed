@@ -6,3 +6,12 @@ services:
     environment:
       - DOCKER_VERNEMQ_ACCEPT_EULA=yes
       - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on # allow anonymous users
+  identity-node:
+    image: identity-node:v0
+    volumes:
+      - ../identity-node:/src
+    restart: always
+    environment:
+      IDENTITY_NODE_PORT: 3000
+      MQTT_BROKER_HOST: mqtt-broker
+      MQTT_BROKER_PORT: 1883

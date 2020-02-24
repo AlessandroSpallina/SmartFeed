@@ -1,0 +1,9 @@
+FROM golang:alpine
+
+WORKDIR /src
+
+# TODO: utilizzare un gestore di dipendenze (?)
+# see https://www.reddit.com/r/golang/comments/95frkk/what_is_the_go_equivalent_to_a_requirementstxt/
+RUN apk add --no-cache git && go get github.com/gin-gonic/gin
+
+CMD ["go", "run", "main.go"]
