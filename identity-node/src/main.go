@@ -10,10 +10,6 @@ import (
 	"log"
 	"os"
 
-	//"identity-node/controller/user_controller"
-
-	//"controller"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,9 +31,12 @@ func getConfigFromEnv() *config {
 }
 
 func startHTTPServer() {
+
+	gin.SetMode(gin.DebugMode)
+
 	r := gin.Default()
 
-	//r.GET("/ping", controller.Ping)
+	r.GET("/ping", ping)
 
 	r.Run(":" + conf.httpServerPort)
 }

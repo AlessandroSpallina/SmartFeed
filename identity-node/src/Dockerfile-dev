@@ -6,6 +6,6 @@ FROM golang:alpine
 
 WORKDIR /src
 
-RUN apk add --no-cache bash git && env GO111MODULE=on go get github.com/cortesi/modd/cmd/modd
+RUN apk add --no-cache alpine-sdk bash git && env GO111MODULE=on go get github.com/cortesi/modd/cmd/modd
 
-CMD ["go", "run", "main.go"]
+# CMD ["go", "run", "main.go"]
