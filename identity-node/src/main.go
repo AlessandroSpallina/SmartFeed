@@ -38,16 +38,12 @@ func startHTTPServer(port string, debug bool) {
 	}
 
 	router := gin.Default()
-
-	//router.GET("/ping", ping)
-	initializeRoutes()
-
+	initializeRoutes(router)
 	router.Run(":" + port)
 }
 
 func main() {
 	conf := getConfigFromEnv()
-
 	log.Println("[IDENTITY] Conf:", *conf)
 
 	startHTTPServer(conf.httpServerPort, conf.debug)
