@@ -9,13 +9,13 @@ package main
 import (
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-var conf = getConfigFromEnv()
-
 type config struct {
+	debug          bool
 	httpServerPort string
 	mqttBrokerHost string
 	mqttBrokerPort string
@@ -23,6 +23,7 @@ type config struct {
 
 func getConfigFromEnv() *config {
 	conf := &config{}
+	conf.debug, _ = strconv.ParseBool(os.Getenv("IDENTITY_DEBUG"))
 	conf.httpServerPort = os.Getenv("IDENTITY_NODE_PORT")
 	conf.mqttBrokerHost = os.Getenv("MQTT_BROKER_HOST")
 	conf.mqttBrokerPort = os.Getenv("MQTT_BROKER_PORT")
@@ -30,19 +31,24 @@ func getConfigFromEnv() *config {
 	return conf
 }
 
-func startHTTPServer() {
+func startHTTPServer(port string, debug bool) {
 
-	gin.SetMode(gin.DebugMode)
+	if !debug {
+		gin.SetMode(gin.ReleaseMode)
+	}
 
-	r := gin.Default()
+	router := gin.Default()
 
-	r.GET("/ping", ping)
+	//router.GET("/ping", ping)
+	initializeRoutes()
 
-	r.Run(":" + conf.httpServerPort)
+	router.Run(":" + port)
 }
 
 func main() {
+	conf := getConfigFromEnv()
+
 	log.Println("[IDENTITY] Conf:", *conf)
 
-	startHTTPServer()
+	startHTTPServer(conf.httpServerPort, conf.debug)
 }
