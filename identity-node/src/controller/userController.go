@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -67,12 +68,20 @@ func Register(c *gin.Context) {
 
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	dateofbirth, _ := time.Parse("1994-04-30", c.PostForm("date-of-birth"))
+	gender := c.PostForm("gender")
+	phone := c.PostForm("phone")
+	email := c.PostForm("email")
 
 	log.Println(username, password)
 
 	u := model.User{}
 	u.Username = username
 	u.Password = password
+	u.DateOfBirth = dateofbirth
+	u.Gender = gender
+	u.Phone = phone
+	u.Email = email
 
 	if _, err := repository.SaveUser(u); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -83,9 +92,9 @@ func Register(c *gin.Context) {
 	}
 
 	// If the user is created, set the token in a cookie and log the user in
-	token := generateSessionToken()
+	/*token := generateSessionToken()
 	c.SetCookie("token", token, 3600, "", "", false, true)
-	c.Set("is_logged_in", true)
+	c.Set("is_logged_in", true)*/
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "success",

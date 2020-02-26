@@ -61,6 +61,7 @@ func IsValidUser(username, password string) bool {
 }
 
 // SaveUser - Save User
+// @findme : la validation dovrebbe essere in un controller o middleware!
 func SaveUser(u model.User) (*model.User, error) {
 	if strings.TrimSpace(u.Password) == "" {
 		return nil, errors.New("the password can't be empty")
