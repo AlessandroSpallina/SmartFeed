@@ -32,11 +32,9 @@ func getConfigFromEnv() *config {
 }
 
 func startHTTPServer(port string, debug bool) {
-
 	if !debug {
 		gin.SetMode(gin.ReleaseMode)
 	}
-
 	router := gin.Default()
 	initializeRoutes(router)
 	router.Run(":" + port)

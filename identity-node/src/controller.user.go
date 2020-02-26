@@ -3,6 +3,7 @@ package main
 // see https://github.com/demo-apps/go-gin-app/blob/a4cfa04a9146109ca88e0ecaba8b53b2af2159d9/handlers.user.go
 
 import (
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -56,8 +57,11 @@ func logout(c *gin.Context) {
 }
 
 func register(c *gin.Context) {
+
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+
+	log.Println(username, password)
 
 	if _, err := registerNewUser(username, password); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
