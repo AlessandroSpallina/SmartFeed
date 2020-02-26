@@ -40,6 +40,7 @@ func Login(c *gin.Context) {
 	}
 
 	token := generateSessionToken()
+	repository.SaveSession(username, token)
 	c.SetCookie("token", token, 3600, "", "", false, true)
 	c.Set("is_logged_in", true)
 
@@ -53,6 +54,9 @@ func Login(c *gin.Context) {
 func Logout(c *gin.Context) {
 	// Clear the cookie
 	c.SetCookie("token", "", -1, "", "", false, true)
+
+	// @findme : a questo punto la sessione su db dovrebbe essere distrutta
+	// es. repository.DeleteSession()
 
 	// Redirect to the home page
 	c.Redirect(http.StatusTemporaryRedirect, "/")
@@ -87,4 +91,8 @@ func Register(c *gin.Context) {
 		"status":  "success",
 		"message": "successful registration",
 	})
+}
+
+func ShowUser(c *gin.Context) {
+
 }

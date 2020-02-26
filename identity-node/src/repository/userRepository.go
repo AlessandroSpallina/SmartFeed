@@ -20,6 +20,36 @@ var userList = []model.User{
 	model.User{Username: "user3", Password: "pass3"},
 }
 
+var sessionList = []model.Session{}
+
+// SaveSession - Save user session
+func SaveSession(user, token string) error {
+	sessionList = append(sessionList, model.Session{User: user, Token: token})
+	// @findme : una vera sessione dovrebbe scadere, da risistemare quando si mette il db
+
+	return nil
+}
+
+// FindUserBySession - Return User by session token
+func FindUserBySession(token string) (*model.User, error) {
+	for _, s := range sessionList {
+		if s.Token == token {
+			return FindUser(s.User)
+		}
+	}
+	return nil, errors.New("session not found")
+}
+
+// FindUser - Return User by username
+func FindUser(username string) (*model.User, error) {
+	for _, u := range userList {
+		if u.Username == username {
+			return &u, nil
+		}
+	}
+	return nil, errors.New("user not found")
+}
+
 // IsValidUser - Check if the username and password combination is valid
 func IsValidUser(username, password string) bool {
 	for _, u := range userList {
