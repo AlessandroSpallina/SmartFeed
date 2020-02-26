@@ -1,8 +1,8 @@
-package main
-
-// see https://github.com/demo-apps/go-gin-app/blob/a4cfa04a9146109ca88e0ecaba8b53b2af2159d9/handlers.user.go
+package controller
 
 import (
+	"identity-node/src/model"
+	"identity-node/src/repository"
 	"log"
 	"math/rand"
 	"net/http"
@@ -11,18 +11,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func pong(c *gin.Context) {
+func generateSessionToken() string {
+	// We're using a random 16 character string as the session token
+	// This is NOT a secure way of generating session tokens
+	// DO NOT USE THIS IN PRODUCTION
+	return strconv.FormatInt(rand.Int63(), 16)
+}
+
+// Pong - check availability
+func Pong(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "success",
 		"message": "pong",
 	})
 }
 
-func performLogin(c *gin.Context) {
+// Login -
+func Login(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
-	if !isUserValid(username, password) {
+	if !repository.IsValidUser(username, password) {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status":  "failure",
 			"message": "invalid credentials provided",
@@ -38,17 +47,10 @@ func performLogin(c *gin.Context) {
 		"status":  "success",
 		"message": "successful login",
 	})
-
 }
 
-func generateSessionToken() string {
-	// We're using a random 16 character string as the session token
-	// This is NOT a secure way of generating session tokens
-	// DO NOT USE THIS IN PRODUCTION
-	return strconv.FormatInt(rand.Int63(), 16)
-}
-
-func logout(c *gin.Context) {
+// Logout -
+func Logout(c *gin.Context) {
 	// Clear the cookie
 	c.SetCookie("token", "", -1, "", "", false, true)
 
@@ -56,14 +58,19 @@ func logout(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, "/")
 }
 
-func register(c *gin.Context) {
+// Register - register new user
+func Register(c *gin.Context) {
 
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
 	log.Println(username, password)
 
-	if _, err := registerNewUser(username, password); err != nil {
+	u := model.User{}
+	u.Username = username
+	u.Password = password
+
+	if _, err := repository.SaveUser(u); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status":  "failure",
 			"message": err.Error(),
