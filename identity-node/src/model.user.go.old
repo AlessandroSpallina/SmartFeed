@@ -3,17 +3,20 @@ package main
 import (
 	"errors"
 	"strings"
+	"time"
 )
 
-type user struct {
-	Username string `json:"username"`
-	Password string `json:"-"`
+// User -> Utente-Turista
+type User struct {
+	Username    string    `json:"username"`
+	Password    string    `json:"-"`
+	DateOfBirth time.Time `json:"date-of-birth"`
 }
 
-var userList = []user{
-	user{Username: "user1", Password: "pass1"},
-	user{Username: "user2", Password: "pass2"},
-	user{Username: "user3", Password: "pass3"},
+var userList = []User{
+	User{Username: "user1", Password: "pass1"},
+	User{Username: "user2", Password: "pass2"},
+	User{Username: "user3", Password: "pass3"},
 }
 
 // Check if the username and password combination is valid
@@ -26,15 +29,15 @@ func isUserValid(username, password string) bool {
 	return false
 }
 
-// Register a new user with the given username and password
-func registerNewUser(username, password string) (*user, error) {
+// DEPRECATED Register a new user with the given username and password
+func registerNewUser(username, password string) (*User, error) {
 	if strings.TrimSpace(password) == "" {
 		return nil, errors.New("the password can't be empty")
 	} else if !isUsernameAvailable(username) {
 		return nil, errors.New("the username isn't available")
 	}
 
-	u := user{Username: username, Password: password}
+	u := User{Username: username, Password: password}
 
 	userList = append(userList, u)
 

@@ -12,6 +12,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	//"identity-node/src/model"
 )
 
 type config struct {
@@ -45,4 +46,6 @@ func main() {
 	log.Println("[IDENTITY] Conf:", *conf)
 
 	startHTTPServer(conf.httpServerPort, conf.debug)
+
+	//model.User
 }
