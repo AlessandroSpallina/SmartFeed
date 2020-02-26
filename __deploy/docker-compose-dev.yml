@@ -11,7 +11,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ../identity-node/src:/src
+      - ../identity-node:/src
     restart: always
     environment:
       IDENTITY_DEBUG: "true"
@@ -20,4 +20,4 @@ services:
       MQTT_BROKER_PORT: 1883
     working_dir: /src
     #command: bash -c "go mod download && modd && go run ." # see https://blog.golang.org/using-go-modules
-    command: bash -c "go mod download && modd && go run"
+    command: bash -c "go mod download && cd ./src && modd && go run"
