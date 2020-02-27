@@ -41,7 +41,7 @@ func Login(c *gin.Context) {
 	}
 
 	token := generateSessionToken()
-	repository.SaveSession(username, token)
+	repository.SaveSession(model.Session{User: username, Token: token})
 	c.SetCookie("token", token, 3600, "", "", false, true)
 	c.Set("is_logged_in", true)
 
@@ -117,4 +117,19 @@ func ShowUser(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 
+}
+
+// ListUserInterests - ritorna la lista di interessi dell'utente che effettua la richiesta
+func ListUserInterests(c *gin.Context) {
+	// se qui è già loggato, perchè sono dietro il middleware ensureLoggedIn
+	token, _ := c.Cookie("token")
+	user, err := repository.FindUserBySession(token)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "failure",
+			"message": err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, repository.ListInterestsByUser(user.Username))
 }

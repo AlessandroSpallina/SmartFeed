@@ -6,24 +6,10 @@ import (
 	"strings"
 )
 
-// SaveSession - Save user session on "db"
-func SaveSession(user, token string) error {
-	_, err := FindUser(user)
-
-	if err != nil {
-		return err
-	}
-
-	sessionList = append(sessionList, model.Session{User: user, Token: token})
-	// @findme : una vera sessione dovrebbe scadere, da risistemare quando si mette il db
-
-	return nil
-}
-
 // FindUserBySession - Return user from "db" by session token
-func FindUserBySession(token string) (*model.User, error) {
+func FindUserBySession(session string) (*model.User, error) {
 	for _, s := range sessionList {
-		if s.Token == token {
+		if s.Token == session {
 			return FindUser(s.User)
 		}
 	}
@@ -68,6 +54,7 @@ func SaveUser(u model.User) (*model.User, error) {
 }
 
 // Check if the supplied username is available
+// ritorna falso se esiste l'utente.
 func isUsernameAvailable(username string) bool {
 	for _, u := range userList {
 		if u.Username == username {

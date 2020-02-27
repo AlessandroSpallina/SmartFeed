@@ -13,6 +13,9 @@ var userList = []model.User{
 
 var sessionList = []model.Session{}
 
+// in interestList la coppia user, tag è da considerarsi univoco con un db vero
+var interestList = []model.Interest{}
+
 // @findme : la colonnina dovrebbe dire a identity node "c'è sk3la davanti a me che sono in piazza dei signori a padova"
 
 var tagList = []model.Tag{
