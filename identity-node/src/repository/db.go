@@ -22,7 +22,8 @@ var tagList = []model.Tag{
 	model.Tag{Name: "trip", Args: []string{"city"}},
 	model.Tag{Name: "teather", Args: []string{"city"}},
 	model.Tag{Name: "local-events", Args: []string{"city"}},
-	model.Tag{Name: "transport", Args: []string{"city"}},
+	model.Tag{Name: "urban-transport", Args: []string{"city"}},
+	model.Tag{Name: "suburban-transport", Args: []string{"from_city", "to_city"}},
 	model.Tag{Name: "weather", Args: []string{"city"}},
 	model.Tag{Name: "nightlife", Args: []string{"city"}},
 }

@@ -1,7 +1,8 @@
 package model
 
-// Interest - Interest{Name:"meteo", Args:{"city":"catania"}}
+// Interest - Interest{Name:"meteo", Args:{"city":["catania", "giarre"]}}
 type Interest struct {
+	User string
 	Name string
-	Args map[string]string
+	Args map[string][]string
 }

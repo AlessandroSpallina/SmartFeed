@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// SaveSession - Save user session
+// SaveSession - Save user session on "db"
 func SaveSession(user, token string) error {
 	_, err := FindUser(user)
 
@@ -20,7 +20,7 @@ func SaveSession(user, token string) error {
 	return nil
 }
 
-// FindUserBySession - Return User by session token
+// FindUserBySession - Return user from "db" by session token
 func FindUserBySession(token string) (*model.User, error) {
 	for _, s := range sessionList {
 		if s.Token == token {
@@ -30,7 +30,7 @@ func FindUserBySession(token string) (*model.User, error) {
 	return nil, errors.New("session not found")
 }
 
-// FindUser - Return User by username
+// FindUser - Return user from "db" by username
 func FindUser(username string) (*model.User, error) {
 	for _, u := range userList {
 		if u.Username == username {
@@ -40,7 +40,7 @@ func FindUser(username string) (*model.User, error) {
 	return nil, errors.New("user not found")
 }
 
-// IsValidUser - Check if the username and password combination is valid
+// IsValidUser - Check if the username and password combination is valid (ergo combination present in "db")
 func IsValidUser(username, password string) bool {
 	for _, u := range userList {
 		if u.Username == username && u.Password == password {
@@ -50,8 +50,11 @@ func IsValidUser(username, password string) bool {
 	return false
 }
 
-// SaveUser - Save User
+// SaveUser - Save user in "db"
 // @findme : la validation dovrebbe essere in un controller o middleware!
+// ma questa è validation? questo è controllo consistenza db, quindi forse può stare qui
+// o meglio, diciamo che il controllo di password non vuoto è validation, la verifica di username disponibile è consisenza db
+// quindi dovresti spostare la validation password empty solamente, quando hai tempo e con calma :D
 func SaveUser(u model.User) (*model.User, error) {
 	if strings.TrimSpace(u.Password) == "" {
 		return nil, errors.New("the password can't be empty")
