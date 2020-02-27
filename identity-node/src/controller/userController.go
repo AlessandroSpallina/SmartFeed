@@ -3,7 +3,6 @@ package controller
 import (
 	"identity-node/src/model"
 	"identity-node/src/repository"
-	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -73,8 +72,6 @@ func Register(c *gin.Context) {
 	phone := c.PostForm("phone")
 	email := c.PostForm("email")
 
-	log.Println(username, password)
-
 	u := model.User{}
 	u.Username = username
 	u.Password = password
@@ -117,19 +114,4 @@ func ShowUser(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 
-}
-
-// ListUserInterests - ritorna la lista di interessi dell'utente che effettua la richiesta
-func ListUserInterests(c *gin.Context) {
-	// se qui è già loggato, perchè sono dietro il middleware ensureLoggedIn
-	token, _ := c.Cookie("token")
-	user, err := repository.FindUserBySession(token)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  "failure",
-			"message": err.Error(),
-		})
-		return
-	}
-	c.JSON(http.StatusOK, repository.ListInterestsByUser(user.Username))
 }

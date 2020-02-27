@@ -18,6 +18,8 @@ func ListInterestsByUser(user string) []model.Interest {
 }
 
 // SaveInterest - salva l'interesse dell'utente su "db"
+// @findme : servirebbe un controllo consistenza db: user,interest_name è univoco, non si dovrebbe inserire una riga duplicata
+// da riattenzionare quando si inserisce il db
 func SaveInterest(i model.Interest) (*model.Interest, error) {
 	_, err := FindUser(i.User)
 

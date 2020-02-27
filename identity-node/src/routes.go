@@ -23,7 +23,7 @@ func initializeRoutes(router *gin.Engine) {
 		userRoutes.GET("/interests", ensureLoggedIn(), controller.ListUserInterests)
 
 		//userRoutes.GET("/interest/{:id}", ensureLoggedIn(), controller.ReadUserInterest)
-		//userRoutes.POST("/interest", ensureLoggedIn(), controller.CreateUserInterest)
+		userRoutes.POST("/interest", ensureLoggedIn(), controller.CreateUserInterest)
 		//userRoutes.POST("/interest/{:id}", ensureLoggedIn(), controller.UpdateUserInterest)
 		//userRoutes.DELETE("/interest/{:id}", ensureLoggedIn(), controller.DeleteUserInterest)
 	}

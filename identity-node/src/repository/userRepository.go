@@ -39,8 +39,13 @@ func IsValidUser(username, password string) bool {
 // SaveUser - Save user in "db"
 // @findme : la validation dovrebbe essere in un controller o middleware!
 // ma questa è validation? questo è controllo consistenza db, quindi forse può stare qui
-// o meglio, diciamo che il controllo di password non vuoto è validation, la verifica di username disponibile è consisenza db
+// o meglio, diciamo che il controllo di password non vuoto è validation, la verifica di username disponibile è consistenza db
 // quindi dovresti spostare la validation password empty solamente, quando hai tempo e con calma :D
+//
+// da riattenzionare quando si inserisce il db: i controlli consistenza li lascerei al db -> se solleva eccezioni allora ritorno errore
+// perchè se lascio controlli consistenza a questo livello dovrei fare una lettura db per verificare e una scrittura db per inserire
+// se lascio tutto al db, invece si riduce ad una scrittura db :D
+// ergo, sto controllo consistenza sparisce quando inserisci il db
 func SaveUser(u model.User) (*model.User, error) {
 	if strings.TrimSpace(u.Password) == "" {
 		return nil, errors.New("the password can't be empty")

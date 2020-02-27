@@ -5,6 +5,8 @@ import (
 )
 
 // SaveSession - Save user session on "db"
+// @findme : servirebbe un controllo consistenza db: user,token_session è univoco, non si dovrebbe inserire una riga duplicata
+// da riattenzionare quando si inserisce il db
 func SaveSession(s model.Session) (*model.Session, error) {
 	_, err := FindUser(s.User)
 
@@ -17,16 +19,3 @@ func SaveSession(s model.Session) (*model.Session, error) {
 
 	return &s, nil
 }
-
-/*func SaveSession(user, token string) error {
-	_, err := FindUser(user)
-
-	if err != nil {
-		return err
-	}
-
-	sessionList = append(sessionList, model.Session{User: user, Token: token})
-	// @findme : una vera sessione dovrebbe scadere, da risistemare quando si mette il db
-
-	return nil
-}*/
