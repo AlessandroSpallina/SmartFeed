@@ -2,12 +2,6 @@ package model
 
 import "time"
 
-// Session - sessioni di autenticazione attive per questo utente
-type Session struct {
-	User  string
-	Token string
-}
-
 // User -> Utente-Turista
 type User struct {
 	Username    string    `json:"username"`

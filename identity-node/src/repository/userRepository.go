@@ -1,29 +1,19 @@
 package repository
 
-// UserRepository - il controller tocca i repository, NON I MODEL
-/*type UserRepository interface {
-	Find() (model.User, error)
-	Save(user model.User) (model.User, error)
-	Update(user model.User) (model.User, error)
-	Delete(user model.User) error
-}*/
-
 import (
 	"errors"
 	"identity-node/src/model"
 	"strings"
 )
 
-var userList = []model.User{
-	model.User{Username: "user1", Password: "pass1"},
-	model.User{Username: "user2", Password: "pass2"},
-	model.User{Username: "user3", Password: "pass3"},
-}
-
-var sessionList = []model.Session{}
-
 // SaveSession - Save user session
 func SaveSession(user, token string) error {
+	_, err := FindUser(user)
+
+	if err != nil {
+		return err
+	}
+
 	sessionList = append(sessionList, model.Session{User: user, Token: token})
 	// @findme : una vera sessione dovrebbe scadere, da risistemare quando si mette il db
 
