@@ -1,12 +1,12 @@
 package controller
 
 import (
+	"fmt"
 	"identity-node/src/model"
 	"identity-node/src/repository"
 	"math/rand"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,10 +28,10 @@ func Pong(c *gin.Context) {
 
 // Login -
 func Login(c *gin.Context) {
-	username := c.PostForm("username")
-	password := c.PostForm("password")
+	var u model.User
+	c.BindJSON(&u)
 
-	if !repository.IsValidUser(username, password) {
+	if !repository.IsValidUser(u.Username, u.Password) {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status":  "failure",
 			"message": "invalid credentials provided",
@@ -40,7 +40,7 @@ func Login(c *gin.Context) {
 	}
 
 	token := generateSessionToken()
-	repository.SaveSession(model.Session{User: username, Token: token})
+	repository.SaveSession(model.Session{User: u.Username, Token: token})
 	c.SetCookie("token", token, 3600, "", "", false, true)
 	c.Set("is_logged_in", true)
 
@@ -64,21 +64,10 @@ func Logout(c *gin.Context) {
 
 // Register - register new user
 func Register(c *gin.Context) {
+	var u model.User
+	c.BindJSON(&u)
 
-	username := c.PostForm("username")
-	password := c.PostForm("password")
-	dateofbirth, _ := time.Parse("1994-04-30", c.PostForm("date-of-birth"))
-	gender := c.PostForm("gender")
-	phone := c.PostForm("phone")
-	email := c.PostForm("email")
-
-	u := model.User{}
-	u.Username = username
-	u.Password = password
-	u.DateOfBirth = dateofbirth
-	u.Gender = gender
-	u.Phone = phone
-	u.Email = email
+	fmt.Println(u)
 
 	if _, err := repository.SaveUser(u); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -87,11 +76,6 @@ func Register(c *gin.Context) {
 		})
 		return
 	}
-
-	// If the user is created, set the token in a cookie and log the user in
-	/*token := generateSessionToken()
-	c.SetCookie("token", token, 3600, "", "", false, true)
-	c.Set("is_logged_in", true)*/
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "success",
@@ -111,6 +95,8 @@ func ShowUser(c *gin.Context) {
 		})
 		return
 	}
+
+	user.Password = ""
 
 	c.JSON(http.StatusOK, user)
 
