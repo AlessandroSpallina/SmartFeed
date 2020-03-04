@@ -23,14 +23,16 @@ services:
       IDENTITY_MQTT_PRODUCER_ID: identity-0
       IDENTITY_MQTT_WELCOME_TOPIC: identity/welcome
     working_dir: /src
-    #command: bash -c "go mod download && modd && go run ." # see https://blog.golang.org/using-go-modules
     command: bash -c "go mod download && cd ./src && modd && go run"
 
   feed-producer:
-      image: python:3
-      #dockerfile: dockerfile-dev
+#      build: ../feed-producer
+      build:
+        context: ../feed-producer
+        dockerfile: Dockerfile-dev
+      volumes:
+        - ../feed-producer:/app
       restart: always
       environment:
         API_KEY: 79c9118b24b5b9dc61998d484842f0dc
         #WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
-      working_dir: /FeedProducer
