@@ -25,3 +25,14 @@ services:
     working_dir: /src
     #command: bash -c "go mod download && modd && go run ." # see https://blog.golang.org/using-go-modules
     command: bash -c "go mod download && cd ./src && modd && go run"
+
+  feed-producer:
+      build:
+        image: python
+        context: feed-producer
+        dockerfile: dockerfile-dev
+      restart: always
+      enviromemt:
+        API_KEY: 79c9118b24b5b9dc61998d484842f0dc
+        #WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
+      working_dir: /FeedProducer
