@@ -1,27 +1,31 @@
 package handler
 
 import (
-	"fmt"
+	"encoding/json"
+	"identity-node/src/repository"
+	"log"
 
 	"github.com/eclipse/paho.mqtt.golang"
 )
 
-// ListUserInterests - ritorna la lista di interessi dell'utente che effettua la richiesta
-/*func ListUserInterests(c *gin.Context) {
-	// se qui è già loggato, perchè sono dietro il middleware ensureLoggedIn
-	token, _ := c.Cookie("token")
-	user, err := repository.FindUserBySession(token)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  "failure",
-			"message": err.Error(),
-		})
+// RequestReplyRoutine - Main routine for this microservice in mqtt protocol
+//
+// I messaggi inviati dagli InfoColumn sul welcomeTopic hanno il seguente formato
+//   {"username":"nomeUtenteRiconosciuto", "response-topic":"nomeTopic"}
+//   il producer mqtt può quindi fare una publish sul topic richiesto dall'InfoColumns
+//   il formato della risposta sul responseTopic è del tipo [{"tag":"weather", "args":["city":["catania", ...]]}]
+//   => PATTERN REQUEST-REPLY su mqtt
+func RequestReplyRoutine(client mqtt.Client, msg mqtt.Message) {
+	request := &RequestBody{}
+	if err := json.Unmarshal(msg.Payload(), request); err != nil {
+		// rispondi da qualche parte in mqtt che la richiesta è malformata
+		log.Printf("[IDENTITY] Received bad request from %s: %s [error: %s]", msg.Topic(), msg.Payload(), err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, repository.ListInterestsByUser(user.Username))
-}*/
 
-func requestReplayRoutine(client mqtt.Client, msg mqtt.Message) {
-	fmt.Printf("TOPIC: %s\n", msg.Topic())
-	fmt.Printf("MSG: %s\n", msg.Payload())
+	reply := repository.ListInterestsByUser(request.Username)
+
+	toSend, _ := json.Marshal(reply)
+
+	client.Publish(request.ResponseTopic, 0, false, toSend).Wait()
 }

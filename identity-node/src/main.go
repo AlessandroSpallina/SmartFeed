@@ -14,7 +14,8 @@ import (
 
 	"github.com/eclipse/paho.mqtt.golang"
 	"github.com/gin-gonic/gin"
-	//"identity-node/src/model"
+
+	"identity-node/src/handler"
 )
 
 type config struct {
@@ -64,12 +65,7 @@ func startMQTTProducer(brokerHost, brokerPort, clientID, welcomeTopic string, de
 	opts := mqtt.NewClientOptions().AddBroker("tcp://" + brokerHost + ":" + brokerPort).SetClientID(clientID)
 	opts.SetKeepAlive(2 * time.Second)
 
-	/*f := func(client mqtt.Client, msg mqtt.Message) {
-		fmt.Printf("TOPIC: %s\n", msg.Topic())
-		fmt.Printf("MSG: %s\n", msg.Payload())
-	}*/
-
-	f := requestReplayRoutine
+	f := handler.RequestReplyRoutine
 
 	opts.SetDefaultPublishHandler(f)
 
