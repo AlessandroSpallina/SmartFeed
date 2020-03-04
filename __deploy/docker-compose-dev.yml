@@ -5,6 +5,7 @@ services:
     restart: always
     ports:
       - "1883:1883"
+      - "8888:8888"
     environment:
       - DOCKER_VERNEMQ_ACCEPT_EULA=yes
       - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on # allow anonymous users
@@ -27,12 +28,13 @@ services:
 
   feed-producer:
 #      build: ../feed-producer
-      build:
-        context: ../feed-producer
-        dockerfile: Dockerfile-dev
+#      build:
+#        context: ../feed-producer
+#        dockerfile: Dockerfile-dev
+      image: feed-producer:v0
       volumes:
         - ../feed-producer:/app
       restart: always
       environment:
         API_KEY: 79c9118b24b5b9dc61998d484842f0dc
-        #WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
+#        WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
