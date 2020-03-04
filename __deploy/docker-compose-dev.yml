@@ -23,8 +23,8 @@ services:
     image: grafana/grafana
     ports:
       - "80:3000"
-    volumes:
-      - ../grafana/:/var/lib/grafana # see https://stackoverflow.com/questions/34031397/running-docker-on-ubuntu-mounted-host-volume-is-not-writable-from-container
+#    volumes:
+#      - ../grafana/:/var/lib/grafana # see https://stackoverflow.com/questions/34031397/running-docker-on-ubuntu-mounted-host-volume-is-not-writable-from-container
 
   identity-node:
     image: identity-node:v0
