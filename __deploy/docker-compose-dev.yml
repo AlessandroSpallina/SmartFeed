@@ -21,7 +21,7 @@ services:
       IDENTITY_MQTT_BROKER_HOST: mqtt-broker
       IDENTITY_MQTT_BROKER_PORT: 1883
       IDENTITY_MQTT_PRODUCER_ID: identity-0
-      IDENTITY_MQTT_WELCOME_TOPIC: identity-default
+      IDENTITY_MQTT_WELCOME_TOPIC: identity/welcome
     working_dir: /src
     #command: bash -c "go mod download && modd && go run ." # see https://blog.golang.org/using-go-modules
     command: bash -c "go mod download && cd ./src && modd && go run"
