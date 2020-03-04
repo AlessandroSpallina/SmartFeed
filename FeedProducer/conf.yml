@@ -1,0 +1,13 @@
+#Configurazione FeedProducer
+
+#location
+city: Catania
+state: it
+
+#scrapers update_time
+weather_time: 60m
+excursion_time: 3h
+theater_time: 3h
+event_time: 3h
+nighteve_time: 3h
+transport_time: 30m
