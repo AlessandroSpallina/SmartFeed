@@ -80,24 +80,6 @@ func startMQTTProducer(brokerHost, brokerPort, clientID, welcomeTopic string, de
 		log.Println("[IDENTITY] MQTT Subscribe err:", token.Error())
 		os.Exit(1)
 	}
-
-	/*for i := 0; i < 5; i++ {
-		text := fmt.Sprintf("this is stocazzo #%d!", i)
-		token := c.Publish(welcomeTopic, 0, false, text)
-		token.Wait()
-	}
-
-	time.Sleep(60 * time.Second)
-
-	if token := c.Unsubscribe(welcomeTopic); token.Wait() && token.Error() != nil {
-		fmt.Println(token.Error())
-		os.Exit(1)
-	}
-
-	c.Disconnect(250)
-
-	time.Sleep(1 * time.Second)*/
-
 }
 
 func startHTTPServer(port string, debug bool) {

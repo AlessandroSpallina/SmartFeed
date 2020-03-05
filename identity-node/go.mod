@@ -11,6 +11,7 @@ require (
 	github.com/armon/go-radix v1.0.0 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/btcsuite/btcutil v1.0.1 // indirect
+	github.com/cpuguy83/go-md2man v1.0.10 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.2.0
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/friendsofgo/errors v0.9.2 // indirect
@@ -45,5 +46,6 @@ require (
 	golang.org/x/tools v0.0.0-20200303225724-c5a141475315 // indirect
 	golang.org/x/tools/gopls v0.3.3 // indirect
 	golang.org/x/tour v0.0.0-20200201212631-8f38c9a8d074 // indirect
+	google.golang.org/appengine v1.4.0 // indirect
 	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20191105091915-95d230a53780 // indirect
 )
