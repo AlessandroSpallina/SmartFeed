@@ -1,6 +1,11 @@
 FROM python:3
 
+ENV PRODUCER_OPENWEATHER_APIKEY 1
+ENV PRODUCER_WEATHER_CITIES 2
+ENV PRODUCER_WEATHER_STATES 3
+ENV PRODUCER_WEATHER_TIME 4
+
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["python", "scraper_master.py"]
+CMD ["python", "main.py"]
