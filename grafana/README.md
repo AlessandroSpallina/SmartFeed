@@ -7,3 +7,5 @@
 4. [Import](https://grafana.com/docs/grafana/latest/reference/export_import/#importing-a-dashboard) the dashboard config file present in this directory
 
 Enjoy some statistics about the MQTT broker!
+
+![](https://spee.ch/7/mqtt-dashboard.jpg)
