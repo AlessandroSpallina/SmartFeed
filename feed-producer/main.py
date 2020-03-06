@@ -12,9 +12,6 @@ def get_config_from_env():
         "WEATHER_TIME": os.environ['PRODUCER_WEATHER_TIME']
     }
 
-def test():
-    print("ciaoaoaoaoaoaoaoao")
-
 def main():
     config = get_config_from_env()
 
@@ -23,6 +20,7 @@ def main():
 
         #schedule.every(confi.WEATHER_TIME).seconds()
 
+    tic_counter = 0
     weather = OpenWeatherAPI(config['OPENWEATHER_APIKEY'], config['WEATHER_CITIES'], config['WEATHER_STATES'])
     #print(weather.forecast_hourly())
         #weather.forecast_hourly()
@@ -33,7 +31,11 @@ def main():
 
     #print(pyfiglet.figlet_format("-------"))
 
-    ret = weather.forecast_hourly()
+    #scheduling delle api (v0.1)
+    while True:
+	    time.sleep(1)
+	    if tic_counter % WEATHER_TIME == 0:
+		weather.parsing()
 
 
 main()
