@@ -54,3 +54,7 @@ services:
         PRODUCER_WEATHER_STATES: it
         PRODUCER_WEATHER_TIME: 3600 # seconds
 #        WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
+
+  redis:
+      image: redis:5-alpine
+      
