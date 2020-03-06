@@ -2,9 +2,8 @@
   <img src="https://spee.ch/4/templogo.png">
 </p>
 
-SmartFeed is a feed delivery architecture with identity management capabilities.
-
-This is a project for "advanced programming languages" course at university of Catania
+<p align="center">SmartFeed is a feed delivery architecture with identity management capabilities.<br>
+  This is a project for "advanced programming languages" course at university of Catania</p>
 
 ## Deployment model
 <p align="center">
