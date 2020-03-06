@@ -4,7 +4,7 @@ A feed delivery, identity based, architecture for a tourist smart city
 This is a project for "advanced programming languages" course at university of Catania
 
 ## Deployment model
-![Architettura Semplificata](https://spee.ch/4/Schermata-da-2020-02-20-13-22-03)
+![Architettura Semplificata](https://spee.ch/b/SmartFeed---Deployment-Model.png)
 
 ## Technical docs
 [IT] Docs about software development process: [Wiki](https://github.com/AlessandroSpallina/SmartFeed/wiki)
