@@ -6,6 +6,7 @@ import json
 
 # @finfme : USA QUESTO FORMATO DI CLASSE PER LE VARIE API
 class OpenWeatherAPI:
+
     def __init__(self, apikey, cities, states):
         self.apikey = apikey
         self.cities = cities
@@ -23,6 +24,33 @@ class OpenWeatherAPI:
             }
         resp = requests.get(self._url('/forecast'), params=params)
 
-        print(resp)
+        return(resp.json())
 
-        return resp.json
+
+    weather = {
+        "temp": 'temp',
+        "feels_like": 'feels_like',
+        "temp_min": 'temp_min',
+        "temp_max": 'temp_max',
+        "pressure": 'pressure',
+        "humidity": 'humidity',
+        "description": 'description',
+        "dt_txt": 'dt_txt'
+        }
+
+    def parsing(self):
+        weather_json = self.forecast_hourly()
+        weather_dict = weather_json["list"]
+        weather_list=[]
+        main_list = ['temp', 'feels_like', 'temp_min', 'temp_min', 'temp_max', 'pressure', 'humidity' ]
+
+        for items in weather_dict[start:3]:
+            for key, value in items['main'].items():
+                if key in main_list:
+                    weather[key] = value
+            for key, value in items['weather'][0].items():
+                weather[key] = value
+            for key, value in items['dt_txt'][0].items():
+                weather[key] = value
+            weather_list.append(weather)
+        return(weather_list)
