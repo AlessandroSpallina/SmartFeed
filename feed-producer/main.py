@@ -17,26 +17,16 @@ def main():
     config = get_config_from_env()
 
     print(pyfiglet.figlet_format("- RFP -")) # RFP codename for REST Feed Producer
-    #print(config['OPENWEATHER_APIKEY'])
-
-        #schedule.every(confi.WEATHER_TIME).seconds()
 
     tic_counter = 0
     weather = OpenWeatherAPI(config['OPENWEATHER_APIKEY'], config['WEATHER_CITIES'], config['WEATHER_STATES'])
-    #print(weather.forecast_hourly())
-        #weather.forecast_hourly()
-        #schedule.every(config['WEATHER_TIME']).seconds.do(weather.forecast_hourly)
-
-    #schedule.every(10).seconds.do(weather.forecast_hourly)
-    #schedule.every(1).minutes.do(test)
-
-    #print(pyfiglet.figlet_format("-------"))
 
     #scheduling delle api (v0.1)
     #while True:
 	 #   time.sleep(1)
 	  #  if tic_counter % WEATHER_TIME == 0:
     previsions=weather.forecast_hourly()
+    print(previsions)
     repo = Repository(config['WEATHER_CITIES'])
     repo.push_repo('weather', previsions)
 

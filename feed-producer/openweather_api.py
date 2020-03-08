@@ -2,7 +2,7 @@ import os
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-import datetime
+from parse_api import extract_values
 #import csv
 
 # @finfme : USA QUESTO FORMATO DI CLASSE PER LE VARIE API
@@ -23,32 +23,24 @@ class OpenWeatherAPI:
             'mode': 'json',
             'appid': self.apikey
             }
-
-        weather = {
-            "temp": 'temp',
-            "feels_like": 'feels_like',
-            "temp_min": 'temp_min',
-            "temp_max": 'temp_max',
-            "pressure": 'pressure',
-            "humidity": 'humidity',
-            "description": 'description',
-            "dt_txt": 'dt_txt'
-            }
             
         resp = requests.get(self._url('/forecast'), params=params)
 
-        weather_dict = resp.json()["list"]
-        weather_list=[]
-        main_list = ['temp', 'feels_like', 'temp_min', 'temp_min', 'temp_max', 'pressure', 'humidity' ]
+        weather_list= []
+        #weather_list = extract_values(resp, key) 
+        #mi torna una lista con tutti i valori di key nell'oggetto resp
+        #quindi se metto 'temp' avro' una lista con tutte le temperature misurate (ne voglio solo 3)
 
-        for items in weather_dict[:3]:
-            weather['dt_txt'] = items['dt_txt']
-            for key, value in items['main'].items():    #per ogni coppia nel dizionario items['main']
-                if key in main_list:
-                    weather[key] = value
-            for key, value in items['weather'][0].items(): #per ogni coppia nel dizionario items['weather']
-                if key == 'description':
-                    weather['description'] = value
-            #for key, value in items['dt_txt'].items():
+        key_list = ['temp', 'feels_like', 'temp_min', 'temp_min', 'temp_max', 'pressure', 'humidity', 'description', 'dt_txt' ]
+        temp_list = []
+        x = 0
+
+        for x in range(0, 3):
+            weather = {}
+            for key in key_list:
+                temp_list = extract_values(resp.json(), key)
+                weather[key] = temp_list[x]
             weather_list.append(weather)
-        return(weather_list)
+
+        return weather_list
+

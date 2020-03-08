@@ -8,8 +8,8 @@ class Repository:
         self.redis = redis.Redis(host="redis")
 
     def _key(self, feed):
-        return self.cities + feed
+        return feed + '|' + self.cities
 
     def push_repo(self, feed, send_list):
         self.redis.set(self._key(feed), json.dumps(send_list))
-        print(send_list)
+        #print(send_list)
