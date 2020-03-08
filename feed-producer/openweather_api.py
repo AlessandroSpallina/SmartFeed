@@ -23,11 +23,7 @@ class OpenWeatherAPI:
             'mode': 'json',
             'appid': self.apikey
             }
-        resp = requests.get(self._url('/forecast'), params=params)
 
-        return(resp.json())
-
-    def parsing(self):
         weather = {
             "temp": 'temp',
             "feels_like": 'feels_like',
@@ -38,13 +34,15 @@ class OpenWeatherAPI:
             "description": 'description',
             "dt_txt": 'dt_txt'
             }
+            
+        resp = requests.get(self._url('/forecast'), params=params)
 
-        weather_json = self.forecast_hourly()
-        weather_dict = weather_json["list"]
+        weather_dict = resp.json()["list"]
         weather_list=[]
         main_list = ['temp', 'feels_like', 'temp_min', 'temp_min', 'temp_max', 'pressure', 'humidity' ]
 
-        for items in weather_dict[0:3]:
+        for items in weather_dict[:3]:
+            weather['dt_txt'] = items['dt_txt']
             for key, value in items['main'].items():    #per ogni coppia nel dizionario items['main']
                 if key in main_list:
                     weather[key] = value
@@ -52,6 +50,5 @@ class OpenWeatherAPI:
                 if key == 'description':
                     weather['description'] = value
             #for key, value in items['dt_txt'].items():
-            weather['dt_txt'] = items['dt_txt']
             weather_list.append(weather)
         return(weather_list)

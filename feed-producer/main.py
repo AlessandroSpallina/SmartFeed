@@ -3,6 +3,7 @@ import os
 import pyfiglet
 import time
 from openweather_api import OpenWeatherAPI
+from repository import Repository
 
 def get_config_from_env():
     return {
@@ -32,10 +33,12 @@ def main():
     #print(pyfiglet.figlet_format("-------"))
 
     #scheduling delle api (v0.1)
-    while True:
-	    time.sleep(1)
-	    if tic_counter % WEATHER_TIME == 0:
-		weather.parsing()
+    #while True:
+	 #   time.sleep(1)
+	  #  if tic_counter % WEATHER_TIME == 0:
+    previsions=weather.forecast_hourly()
+    repo = Repository(config['WEATHER_CITIES'])
+    repo.push_repo('weather', previsions)
 
 
 main()
