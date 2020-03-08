@@ -6,8 +6,9 @@ import (
 	"strconv"
 	"time"
 
+	"./handler"
+
 	mqtt "github.com/eclipse/paho.mqtt.golang"
-	"github.com/gin-gonic/gin"
 )
 
 type config struct {
@@ -40,7 +41,9 @@ func startMQTTProducer(brokerHost, brokerPort, clientID, welcomeTopic string, de
 	opts := mqtt.NewClientOptions().AddBroker("tcp://" + brokerHost + ":" + brokerPort).SetClientID(clientID)
 	opts.SetKeepAlive(2 * time.Second)
 
-	f := handler.RequestReplyRoutine
+	//f := handler.RequestReplyRoutine
+
+	f := handler.RequestRoutine
 
 	opts.SetDefaultPublishHandler(f)
 
@@ -57,6 +60,7 @@ func startMQTTProducer(brokerHost, brokerPort, clientID, welcomeTopic string, de
 	}
 }
 
+/*
 func startHTTPServer(port string, debug bool) {
 	if !debug { // di default gin parte in debug
 		gin.SetMode(gin.ReleaseMode)
@@ -65,6 +69,7 @@ func startHTTPServer(port string, debug bool) {
 	initializeRoutes(router)
 	router.Run(":" + port)
 }
+*/
 
 func main() {
 	conf := getConfigFromEnv()
@@ -72,7 +77,7 @@ func main() {
 
 	go startMQTTProducer(conf.mqttBrokerHost, conf.mqttBrokerPort, conf.mqttProducerID, conf.mqttWelcomeTopic, conf.debug)
 
-	startHTTPServer(conf.httpServerPort, conf.debug)
+	//startHTTPServer(conf.httpServerPort, conf.debug)
 
 	//model.User
 }
