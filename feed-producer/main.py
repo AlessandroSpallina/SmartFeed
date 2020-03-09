@@ -19,16 +19,15 @@ def main():
     print(pyfiglet.figlet_format("- RFP -")) # RFP codename for REST Feed Producer
 
     tic_counter = 0
-    weather = OpenWeatherAPI(config['OPENWEATHER_APIKEY'], config['WEATHER_CITIES'], config['WEATHER_STATES'])
+    weather = OpenWeatherAPI(config['OPENWEATHER_APIKEY'], config['WEATHER_CITIES'].lower(), config['WEATHER_STATES'])
 
     #scheduling delle api (v0.1)
-    #while True:
-	 #   time.sleep(1)
-	  #  if tic_counter % WEATHER_TIME == 0:
-    previsions=weather.forecast_hourly()
-    print(previsions)
-    repo = Repository(config['WEATHER_CITIES'])
-    repo.push_repo('weather', previsions)
+    while True:
+        time.sleep(1)
+        if tic_counter % int(config['WEATHER_TIME']) == 0:
+            previsions=weather.forecast_hourly()
+            repo = Repository(config['WEATHER_CITIES'])
+            repo.push_repo('weather', previsions)
 
 
 main()

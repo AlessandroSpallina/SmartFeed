@@ -10,7 +10,7 @@ class OpenWeatherAPI:
 
     def __init__(self, apikey, cities, states):
         self.apikey = apikey
-        self.cities = cities
+        self.cities = cities.lower()
         self.states = states
         self.url = 'https://api.openweathermap.org/data/2.5'
 
