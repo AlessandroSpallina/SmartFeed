@@ -1,5 +1,10 @@
 ## Feed Producer
 
+## Architecture
+<p align="center">
+  <img src="https://spee.ch/d/SmartFeed---FeedProducer">
+</p>
+
 ## Test JSON weather scraping and storing in Redis (development environment)
 1. Open the __deploy directory
 2. Set your configuration parameters in the docker-compose-dev.yml file (PRODUCER_WEATHER_CITIES, PRODUCER_WEATHER_TIME)
@@ -15,4 +20,6 @@ monitor
 6. You will see your list of dictionaries being stored periodically (period decided by the PRODUCER_WEATHER_TIME parameter setted before)
 
 ## Demo
+
+[![Alt text]](https://spee.ch/c/Demo-feed-producer)
 
