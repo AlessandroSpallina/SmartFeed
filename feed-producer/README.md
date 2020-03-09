@@ -19,7 +19,3 @@ monitor
 ```
 6. You will see your list of dictionaries being stored periodically (period decided by the PRODUCER_WEATHER_TIME parameter setted before)
 
-## Demo
-
-[![Alt text]](https://spee.ch/c/Demo-feed-producer)
-
