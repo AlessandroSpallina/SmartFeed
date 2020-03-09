@@ -1,33 +1,28 @@
-import os
 import requests
-from requests.auth import HTTPBasicAuth
 import json
-from parse_api import extract_values
-#import csv
+from utils import extract_values
 
 # @finfme : USA QUESTO FORMATO DI CLASSE PER LE VARIE API
 class OpenWeatherAPI:
 
-    def __init__(self, apikey, cities, states):
+    def __init__(self, apikey):
         self.apikey = apikey
-        self.cities = cities.lower()
-        self.states = states
         self.url = 'https://api.openweathermap.org/data/2.5'
 
-    def _url(self, path):
+    def __url(self, path):
         return self.url + path
 
-    def forecast_hourly(self):
+    def three_hour_forecast(self, city):
         params = {
-            'q': self.cities,
+            'q': city,
             'mode': 'json',
             'appid': self.apikey
             }
-            
-        resp = requests.get(self._url('/forecast'), params=params)
+
+        resp = requests.get(self.__url('/forecast'), params=params)
 
         weather_list= []
-        #weather_list = extract_values(resp, key) 
+        #weather_list = extract_values(resp, key)
         #mi torna una lista con tutti i valori di key nell'oggetto resp
         #quindi se metto 'temp' avro' una lista con tutte le temperature misurate (ne voglio solo 3)
 
@@ -43,4 +38,3 @@ class OpenWeatherAPI:
             weather_list.append(weather)
 
         return weather_list
-

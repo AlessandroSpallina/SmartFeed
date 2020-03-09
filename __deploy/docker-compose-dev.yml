@@ -49,9 +49,9 @@ services:
         - ../feed-producer:/app
       restart: always
       environment:
-        PRODUCER_OPENWEATHER_APIKEY: 79c9118b24b5b9dc61998d484842f0dc
-        PRODUCER_WEATHER_CITIES: Catania
-        PRODUCER_WEATHER_STATES: it
+        PRODUCER_WEATHER_APIKEY: 79c9118b24b5b9dc61998d484842f0dc
+        PRODUCER_WEATHER_CITIES: catania|acireale|misterbianco|paternò
+#        PRODUCER_WEATHER_STATES: it
         PRODUCER_WEATHER_TIME: 3600 # seconds
 #        WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
 
