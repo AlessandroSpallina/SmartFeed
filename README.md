@@ -1,9 +1,16 @@
 <p align="center">
   <img src="https://spee.ch/4/templogo.png">
+  
 </p>
 
 <p align="center">SmartFeed is a feed delivery architecture with identity management capabilities.<br>
   This is a project for "advanced programming languages" course at university of Catania</p>
+
+<p align="center">
+  <a href="https://sonarcloud.io/dashboard?id=AlessandroSpallina_SmartFeed">
+    <img src="https://sonarcloud.io/api/project_badges/measure?project=AlessandroSpallina_SmartFeed&metric=alert_status">
+  </a>
+</p>
 
 ## Deployment model
 <p align="center">
