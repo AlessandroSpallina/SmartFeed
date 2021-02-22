@@ -19,7 +19,7 @@ Read our beautiful [API Docs](https://documenter.getpostman.com/view/13959997/TW
 3. Publish a request in the welcome topic (identity/welcome) following the format:
 ```
 {
-  "username": <previouslyRegisteredUser>
+  "username": <previouslyRegisteredUser>,
   "response-topic": <aTopicName>
 }
 ```
