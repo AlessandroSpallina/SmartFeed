@@ -2,7 +2,7 @@
 
 ## Architecture
 <p align="center">
-  <img src="https://spee.ch/d/SmartFeed---FeedProducer">
+  <img src="https://raw.githubusercontent.com/AlessandroSpallina/SmartFeed/master/res/rest-feed-producer/SmartFeed%20-%20FeedProducer.png">
 </p>
 
 ## Test JSON weather scraping and storing in Redis (development environment)
