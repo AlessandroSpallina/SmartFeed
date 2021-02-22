@@ -10,7 +10,7 @@ Read our beautiful [API Docs](https://documenter.getpostman.com/view/13959997/TW
 
 ## Test REST stuff with postman (development environment)
 1. Install [Postman](https://www.postman.com/)
-2. Get the postman method collection [HERE](https://www.getpostman.com/collections/2be9d338f6a5b032acb4)
+2. Import the postman method collection (click on run on postman) [HERE](https://documenter.getpostman.com/view/13959997/TWDXpHP6)
 3. Import the collection in postman
 4. Choose methods to test by GUI.
 
