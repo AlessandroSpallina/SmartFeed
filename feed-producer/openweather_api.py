@@ -2,7 +2,7 @@ import requests
 import json
 from utils import extract_values
 
-# @finfme : USA QUESTO FORMATO DI CLASSE PER LE VARIE API
+# @findme : USA QUESTO FORMATO DI CLASSE PER LE VARIE API
 class OpenWeatherAPI:
 
     def __init__(self, apikey):
