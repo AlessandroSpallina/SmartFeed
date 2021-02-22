@@ -1,5 +1,12 @@
-FROM golang:alpine
-ADD ./ /go/src/app
-WORKDIR /go/src/app
-ENV PORT=3001
-CMD ["go", "run", "main.go"]
+FROM python:3.8
+
+ENV PROVIDER_HTTP_SERVER_PORT 1
+ENV PROVIDER_MQTT_BROKER_HOST 2
+ENV PROVIDER_MQTT_BROKER_PORT 3
+ENV PROVIDER_MQTT_PRODUCER_ID 4
+ENV PROVIDER_MQTT_WELCOME_TOPIC 5
+
+WORKDIR /app
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+CMD ["python", "main.py"]
