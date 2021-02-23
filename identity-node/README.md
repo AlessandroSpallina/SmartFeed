@@ -20,7 +20,7 @@ Read our beautiful [API Docs](https://documenter.getpostman.com/view/13959997/TW
 ```
 {
   "username": <previouslyRegisteredUser>,
-  "response-topic": <aTopicName>
+  "response_topic": <aTopicName>
 }
 ```
 4. You will get a reply in the "response-topic" requested following the format:
