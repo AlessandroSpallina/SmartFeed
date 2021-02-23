@@ -30,6 +30,8 @@ services:
     image: identity-node:v0
     ports:
       - "3000:3000"
+    depends_on:
+      - "mqtt-broker"
     volumes:
       - ../identity-node:/src
     restart: always
@@ -45,6 +47,8 @@ services:
 
   feed-producer:
       image: feed-producer:v0
+      depends_on:
+        - "feed-provider"
       volumes:
         - ../feed-producer:/app
       restart: always
@@ -56,7 +60,12 @@ services:
 #        WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
 
   feed-provider:
-      image: feed-provider:v0
+      image: feed-provider:v0.1
+      ports:
+        - "3030:3030"
+      depends_on:
+        - "mqtt-broker"
+        - "redis"
       volumes:
         - ../feed-provider:/app
       restart: always
