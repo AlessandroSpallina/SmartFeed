@@ -4,6 +4,7 @@ from marshmallow_dataclass import dataclass
 from typing import List
 import json
 import marshmallow
+import time
 
 import repository
 
@@ -73,14 +74,17 @@ class MqttHandler:
         except json.decoder.JSONDecodeError:
             print("Received bad message format (JSONDecodeError)")
 
-
-
     def init(self):
         self._client = mqtt.Client()
         self._client.on_connect = self._on_connect
         self._client.on_message = self._on_message
 
     def start(self):
-        self._db = repository.InterestRepository()
-        self._client.connect(self._broker_host, self._broker_port, 60)
-        self._client.loop_forever()
+        try:
+            self._client.connect(self._broker_host, self._broker_port, 60)
+            self._db = repository.InterestRepository()
+            self._client.loop_forever()
+        except ConnectionRefusedError:
+            print("Connection refused, retrying in 10 sec")
+            time.sleep(10)
+            self.start()

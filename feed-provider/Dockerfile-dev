@@ -9,4 +9,4 @@ ENV PROVIDER_MQTT_WELCOME_TOPIC 5
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["python", "main.py"]
+CMD python http_main.py & python mqtt_main.py
