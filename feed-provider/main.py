@@ -1,26 +1,20 @@
-import math
+import os
+from mqtt import MqttHandler
 
-class Solver:
 
-    def demo(self, a, b, c):
-        d = b ** 2 - 4 * a * c
-        if d > 0:
-            disc = math.sqrt(d)
-            root1 = (-b + disc) / (2 * a)
-            root2 = (-b - disc) / (2 * a)
-            return root1, root2
-        elif d == 0:
-            return -b / (2 * a)
-        else:
-            return "This equation has no roots"
+def get_config_from_env():
+    return {
+        "HTTP_SERVER_PORT": int(os.environ['PROVIDER_HTTP_SERVER_PORT']),
+        "MQTT_BROKER_HOST": os.environ['PROVIDER_MQTT_BROKER_HOST'],
+        "MQTT_BROKER_PORT": int(os.environ['PROVIDER_MQTT_BROKER_PORT']),
+        "MQTT_PRODUCER_ID": os.environ['PROVIDER_MQTT_PRODUCER_ID'],
+        "MQTT_WELCOME_TOPIC": os.environ['PROVIDER_MQTT_WELCOME_TOPIC']
+    }
 
 
 if __name__ == '__main__':
-    solver = Solver()
+    config = get_config_from_env()
 
-    while True:
-        a = int(input("aaaaaaaaa: "))
-        b = int(input("b: "))
-        c = int(input("c: "))
-        result = solver.demo(a, b, c)
-        print(result)
+    mqtt = MqttHandler(config)
+    mqtt.init()
+    mqtt.start()
