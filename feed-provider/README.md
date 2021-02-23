@@ -7,7 +7,7 @@
 
 ## Test REST stuff with postman (development environment)
 1. Install [Postman](https://www.postman.com/)
-2. Import the postman method collection (click on run in postman) [HERE]()
+2. Import the postman method collection (click on run in postman) [HERE](https://documenter.getpostman.com/view/13959997/TWDZJbzW)
 3. Choose methods to test by GUI.
 
 ## Test MQTT stuff with MQTT Explorer (development environment)
