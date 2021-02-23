@@ -27,5 +27,46 @@
 ```
 4. You will get a reply in the "response-topic" requested following the format:
 ```
-
+[
+  {
+    "query": {
+      "tag": "weather",
+      "args": [
+        "catania"
+      ]
+    },
+    "data": [
+      {
+        "temp": 286.73,
+        "feels_like": 285.89,
+        "temp_min": 286.17,
+        "temp_max": 286.73,
+        "pressure": 1033,
+        "humidity": 75,
+        "description": "clear sky",
+        "dt_txt": "2021-02-23 18:00:00"
+      }, ...
+    ]
+  },
+  {
+    "query": {
+      "tag": "weather",
+      "args": [
+        "misterbianco"
+      ]
+    },
+    "data": [
+      {
+        "temp": 285.76,
+        "feels_like": 284.94,
+        "temp_min": 284.26,
+        "temp_max": 285.76,
+        "pressure": 1033,
+        "humidity": 76,
+        "description": "clear sky",
+        "dt_txt": "2021-02-23 18:00:00"
+      }, ...
+    ]
+  }
+]
 ```
