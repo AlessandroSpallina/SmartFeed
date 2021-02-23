@@ -11,18 +11,18 @@ services:
       - DOCKER_VERNEMQ_ACCEPT_EULA=yes
       - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on # allow anonymous users
 
-  prometheus:
-    image: prom/prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    command: --config.file=/etc/prometheus/prometheus.yml
+#  prometheus:
+#    image: prom/prometheus
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+#    command: --config.file=/etc/prometheus/prometheus.yml
 
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "80:3000"
+#  grafana:
+#    image: grafana/grafana
+#    ports:
+#      - "80:3000"
 #    volumes:
 #      - ../grafana/:/var/lib/grafana # see https://stackoverflow.com/questions/34031397/running-docker-on-ubuntu-mounted-host-volume-is-not-writable-from-container
 
@@ -34,7 +34,7 @@ services:
       - ../identity-node:/src
     restart: always
     environment:
-      IDENTITY_DEBUG: "true"
+      IDENTITY_DEBUG: "false"
       IDENTITY_HTTP_SERVER_PORT: 3000
       IDENTITY_MQTT_BROKER_HOST: mqtt-broker
       IDENTITY_MQTT_BROKER_PORT: 1883
@@ -54,6 +54,18 @@ services:
 #        PRODUCER_WEATHER_STATES: it
         PRODUCER_WEATHER_TIME: 3600 # seconds
 #        WEATHER_URL: https://api.openweathermap.org/data/2.5/forecast
+
+  feed-provider:
+      image: feed-provider:v0
+      volumes:
+        - ../feed-provider:/app
+      restart: always
+      environment:
+        PROVIDER_HTTP_SERVER_PORT: 3030
+        PROVIDER_MQTT_BROKER_HOST: mqtt-broker
+        PROVIDER_MQTT_BROKER_PORT: 1883
+        PROVIDER_MQTT_PRODUCER_ID: provider-0
+        PROVIDER_MQTT_WELCOME_TOPIC: provider/welcome
 
   redis:
       container_name: redis
