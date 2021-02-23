@@ -18,7 +18,8 @@
 {
   "query": [
                 {
-                    
+                    "tag" : <tagName>,
+                    "args" : ['value1', 'value2']
                 }
            ],
   "response_topic": <aTopicName>
@@ -26,13 +27,5 @@
 ```
 4. You will get a reply in the "response-topic" requested following the format:
 ```
-[
-  {
-    "tag": "weather",
-    "args": {"city": ["catania", "giarre"]}
-  }
-]
-```
 
-## Demo
-[![Alt text](https://spee.ch/3/identity-node-demo2.jpg)](https://spee.ch/d/identity-node-demo-v0.webm)
+```

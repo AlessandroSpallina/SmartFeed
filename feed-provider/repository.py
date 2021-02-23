@@ -12,14 +12,19 @@ class Repository:
 
     # Returns the read string
     def pull(self, key):
-        return self.redis.get(key)
+        try:
+            to_return = json.loads(self.redis.get(key))
+        except TypeError:
+            to_return = None
+
+        return to_return
 
 
 class InterestRepository(Repository):
     def _get_key(self, tag, args):
         redis_key = tag
         for arg in args:
-            redis_key += f"|{args}"
+            redis_key += f"|{arg}"
         return redis_key
 
     def create(self, tag, args, value):
