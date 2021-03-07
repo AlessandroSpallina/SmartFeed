@@ -9,6 +9,7 @@ import time
 import repository
 
 
+# json to python object the easy way: https://stackoverflow.com/a/54792440
 @dataclass
 class MqttQuery:
     '''
