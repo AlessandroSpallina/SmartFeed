@@ -1,79 +1,44 @@
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
-from marshmallow_dataclass import dataclass
-from typing import List
-import json
-import marshmallow
+
 import time
-
-import repository
-
-
-# json to python object the easy way: https://stackoverflow.com/a/54792440
-@dataclass
-class MqttQuery:
-    '''
-    Accept something like this
-    {
-        'tag': 'tagname',
-        'args' : ['value1', 'value2']
-    }
-    '''
-    tag: str
-    args: List[str]
-
-
-@dataclass
-class MqttMessage:
-    '''
-    Messaggio del tipo
-    {query: [mqttquery, ...], response_topic: stringa}
-    '''
-    query: List[MqttQuery]
-    response_topic: str
 
 
 class MqttHandler:
-    def __init__(self, config):
+    """
+    Accetta:
+        * una lista di topic_to_subscribe
+        * una funzione che gestirà i messaggi ricevuti
+
+    Quando riceve un messaggio da un topic passa un dizionario {"topic": <topic>: "message": <message>}
+    alla funzione che implementa la logica di gestione del messaggio
+    """
+    def __init__(self, config, topics_to_subscribe,  received_message_handler):
         self._broker_host = config['MQTT_BROKER_HOST']
         self._broker_port = config['MQTT_BROKER_PORT']
-        self._welcome_topic = config['MQTT_WELCOME_TOPIC']
         self._id = config['MQTT_PRODUCER_ID']
 
+        self._topics_to_subscribe = topics_to_subscribe
+        self._received_message_handler = received_message_handler
+
         self._client = None
-        self._db = None
 
     def _on_connect(self, client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
 
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
-        self._client.subscribe(self._welcome_topic)
+        for topic in self._topics_to_subscribe:
+            print(f"Subscribed to {topic}")
+            self._client.subscribe(topic)
 
     # The callback for when a PUBLISH message is received from the server.
     def _on_message(self, client, userdata, msg):
         print(msg.topic + " " + str(msg.payload))
-        # Messaggio del tipo
-        # {query: [mqttquery, ...], response-topic: stringa}
-        try:
-            msg.payload = json.loads(msg.payload)
-            message = MqttMessage.Schema().load(msg.payload)
-            # raccogliere le risposte delle query
-            # comporre un messaggio di risposta adeguato
-            # inviare sul giusto topic
-            to_publish = []
-            for q in message.query:
-                to_publish.append({'query': q.__dict__, 'data': self._db.read(q.tag, q.args)})
 
-            # print(f"{self._db.read(message.query[0].tag, message.query[0].args)}")
-            publish.single(message.response_topic, json.dumps(to_publish), hostname=self._broker_host)
-
-            # print(f"{message.response_topic}, {message.query[0].tag}")
-
-        except marshmallow.exceptions.ValidationError:
-            print("Received bad message format (ValidationError)")
-        except json.decoder.JSONDecodeError:
-            print("Received bad message format (JSONDecodeError)")
+        ret = self._received_message_handler({"topic": msg.topic, "message": msg.payload})
+        if ret is not None:
+            publish.single(ret["topic"], ret["message"], hostname=self._broker_host)
 
     def init(self):
         self._client = mqtt.Client()
@@ -83,7 +48,6 @@ class MqttHandler:
     def start(self):
         try:
             self._client.connect(self._broker_host, self._broker_port, 60)
-            self._db = repository.InterestRepository()
             self._client.loop_forever()
         except ConnectionRefusedError:
             print("Connection refused, retrying in 10 sec")
