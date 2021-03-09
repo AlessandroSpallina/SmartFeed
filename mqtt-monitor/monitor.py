@@ -7,7 +7,7 @@ sys.path.insert(0, '../feed-provider')
 from mqtt import MqttHandler
 import utils
 
-LOG_FILE = "mqtt_messages.csv.example"
+LOG_FILE = "mqtt_messages.csv"
 
 
 def received_message_handler(received_dict):

@@ -1,5 +1,5 @@
-makePlot <- function (png_save_path= "plot.png.example") {
-  a <- read.csv(file=file.path("mqtt-monitor", "mqtt_messages.csv.example"), sep=";")
+makePlot <- function (png_save_path= "plot.png") {
+  a <- read.csv(file=file.path("mqtt-monitor", "mqtt_messages.csv"), sep=";")
   # voglio un plot multiclasse (una per topic), il tempo nelle x e i byte nelle y
   a$timestamp <- as.POSIXct(a$timestamp, origin="1970-01-01")
   # voglio definire i topic come classi (colore diverso nel plot), serve renderli factor
