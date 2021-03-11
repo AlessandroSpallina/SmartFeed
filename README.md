@@ -14,7 +14,7 @@
 
 ## Deployment model
 <p align="center">
-  <img src="https://spee.ch/b/SmartFeed---Deployment-Model.png">
+  <img src="https://raw.githubusercontent.com/AlessandroSpallina/SmartFeed/master/res/deployment-model/SmartFeed-Architecture.png">
 </p>
 
 ## Technical docs
